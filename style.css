@@ -1,0 +1,175 @@
+
+body
+{ background-image: url(img/ded.png);
+
+}
+
+.kek{
+  border: 10px solid #FFF361;
+  margin:0px auto ;
+  padding: 0;
+  width: 1000px;
+height: 720px;
+  background-image: url(img/12.png);
+  border-radius: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.power_controls a{
+  background-color: red;
+  padding: 0;
+  font-size: 18px;
+
+}
+.power_controls p{
+  font-size: 18px;
+  margin: -8px;
+  text-align: center;
+
+}
+#head{
+  padding-bottom: 50px;
+  text-align: center;
+  margin: 0px auto;
+  height: 70px;
+}
+ #head li{
+   text-align:center;
+   border: 1px solid #FFF361;
+   margin: -2px;
+display: inline-block;
+background-color: #C50205;
+border-radius: 0px 0px 10px 10px
+}
+ #head ul{
+   margin: 0px;
+   padding: 0px;
+  list-style: none;
+  height: 70px;
+}
+
+ #head a:link , a:visited{
+  text-decoration:none;
+  font-size: 30px;
+  color: black;
+  opacity: 0.8;
+  display:block;
+  -moz-transition:all 1s 00.01s ease;
+  -o-transition:all 1s 00.01s ease;
+  -webkit-transition:all 1s 00.01s ease;
+padding: 20px 30px;
+border-radius: 0px 0px 10px 10px;
+
+
+
+}
+ #head a:hover {
+  background-color: #55DCF6;
+  color: white;
+border-radius: 0px 0px 10px 10px;
+text-align:center;
+}
+
+#right{
+  float: right;
+    background-color: #55DCF6;
+    border: 5px solid black
+
+  }
+    #right h2{
+      color: #FFF361 ;
+      background: black;
+      opacity: 0.8
+    }
+  #down{
+    margin: 170px auto;
+    color:#C50205;
+    height:360px;
+    background-color:black;
+    font-size: 15px;
+    text-align: center;
+    background-image: url(img/giphy.gif);}
+
+
+
+
+/* Sets the background image for the wheel */
+td.the_wheel
+{
+    background-image: url(img/wheel_back.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Do some css reset on selected elements */
+h1, p
+{
+  color: white;
+    margin: 0;
+}
+
+div.power_controls
+{
+    margin-right:70px;
+}
+
+div.html5_logo
+{
+    margin-left:70px;
+}
+
+/* Styles for the power selection controls */
+table.power
+{
+    background-color: #cccccc;
+    cursor: pointer;
+    border:1px solid #333333;
+}
+
+table.power th
+{
+    background-color: white;
+    cursor: default;
+}
+
+td.pw1
+{
+    background-color: yellow;
+}
+
+td.pw2
+{
+    background-color: orange;
+}
+
+td.pw3
+{
+    background-color: red;
+}
+
+/* Style applied to the spin button once a power has been selected */
+.clickable
+{
+    cursor: pointer;
+}
+
+/* Other misc styles */
+.margin_bottom
+{
+    margin-bottom: 5px;
+}

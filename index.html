@@ -1,0 +1,217 @@
+
+<html>
+    <head>
+        <title>Lucky Zlaki</title>
+        <link rel="stylesheet" href="style.css" type="text/css" />
+        <script type="text/javascript" src="Winwheel.js"></script>
+        <script src="TweenMax.min.js"></script>
+    </head>
+    <body>
+      <div id="head">
+        <ul>
+          <li><a href="https://lucky-zlakki.github.io/">Главная</a></li>
+          <li><a href="https://lucky-zlakki.github.io/roulette">Рулетка</a></li>
+          <li><a href="https://pucfoundation.github.io/lucky-zlaki/">Продукция</a></li>
+          <li><a href="https://pucfoundation.github.io/lucky-zlaki/">О нас</a></li>
+          <li><a href="https://lucky-zlakki.github.io/partners/">Партнеры</a></li>
+
+
+
+
+        </ul>
+      </div>
+      <div class="kek">
+
+
+      <div id="right">
+        <img src="img/david.gif" alt="">
+        <h2>Вы через 5 минут</h2>
+
+        <img src="img/money.gif" alt="">
+        <h2>Ваши кошельки через <br />5 минут</h2>
+        </div>
+
+
+        <div align="center">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td>
+                        <div class="power_controls">
+                            <br />
+                            <br />
+                            <table class="power" cellpadding="6" cellspacing="0">
+                                <tr>
+                                    <th align="center">Выбери скорость</th>
+                                </tr>
+                                <tr>
+                                    <td width="78" align="center" id="pw3" onClick="powerSelected(3);">  <img src="img/ana.png"></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" id="pw2" onClick="powerSelected(2);"><img src="img/ses.png"></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" id="pw1" onClick="powerSelected(1);"> <img src="img/kok.png"></td>
+                                </tr>
+                            </table>
+                            <br />
+                            <img id="spin_button" src="img/kekoff.png" alt="Spin" onClick="startSpin();" />
+                            <br /><br />
+                            &nbsp;&nbsp;<a href="#" onClick="resetWheel(); return false;">Попробуй еще раз</a><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>(-499 руб. )</p>
+                        </div>
+                    </td>
+                    <td width="421" height="564" class="the_wheel" align="center" valign="center">
+                        <canvas id="canvas" width="420" height="420">
+                            <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+                        </canvas>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </div>
+        <script>
+            // Create new wheel object specifying the parameters at creation time.
+            let theWheel = new Winwheel({
+                'numSegments'       : 8,                 // Specify number of segments.
+                'outerRadius'       : 200,               // Set outer radius so wheel fits inside the background.
+                'drawText'          : true,              // Code drawn text can be used with segment images.
+                'textFontSize'      : 18,
+                'textOrientation'   : 'curved',
+                'textAlignment'     : 'inner',
+                'textMargin'        : 170,
+                'textFontFamily'    : 'monospace',
+                'textStrokeStyle'   : 'black',
+                'textLineWidth'     : 3,
+                'textFillStyle'     : 'white',
+                'drawMode'          : 'segmentImage',    // Must be segmentImage to draw wheel using one image per segemnt.
+                'segments'          :                    // Define segments including image and text.
+                [
+                   {'image' : 'img/grecha.png',  'text' : 'Гречка'},
+                   {'image' : 'img/kukuruza.png',   'text' : 'Кукуруза'},
+                   {'image' : 'img/jajmen.png',  'text' : 'Ячмень'},
+                   {'image' : 'img/rice.png',  'text' : 'Рис'},
+                   {'image' : 'img/oves.png', 'text' : 'Овес'},
+                   {'image' : 'img/psheno.png', 'text' : 'Пшено'},
+                   {'image' : 'img/manka.png',  'text' : 'Манка'},
+                   {'image' : 'img/goroh.png', 'text' : 'Горох'}
+                ],
+                'animation' :           // Specify the animation to use.
+                {
+                    'type'     : 'spinToStop',
+                    'duration' : 5,     // Duration in seconds.
+                    'spins'    : 8,     // Number of complete spins.
+                    'callbackFinished' : alertPrize,
+                    'callbackSound'    : playSound,
+                }
+            });
+
+            // Vars used by the code in this page to do power controls.
+            let wheelPower    = 0;
+            let wheelSpinning = false;
+            let audio = new Audio('img/boombastic.mp3');
+            function playSound()
+            {
+                // Stop and rewind the sound if it already happens to be playing.
+                audio.pause();
+                audio.currentTime = 0;
+
+                // Play the sound.
+                audio.play();
+            }
+
+            // -------------------------------------------------------
+            // Function to handle the onClick on the power buttons.
+            // -------------------------------------------------------
+            function powerSelected(powerLevel)
+            {
+                // Ensure that power can't be changed while wheel is spinning.
+                if (wheelSpinning == false) {
+                    // Reset all to grey incase this is not the first time the user has selected the power.
+                    document.getElementById('pw1').className = "";
+                    document.getElementById('pw2').className = "";
+                    document.getElementById('pw3').className = "";
+
+                    // Now light up all cells below-and-including the one selected by changing the class.
+                    if (powerLevel >= 1) {
+                        document.getElementById('pw1').className = "pw1";
+                    }
+
+                    if (powerLevel >= 2) {
+                        document.getElementById('pw2').className = "pw2";
+                    }
+
+                    if (powerLevel >= 3) {
+                        document.getElementById('pw3').className = "pw3";
+                    }
+
+                    // Set wheelPower var used when spin button is clicked.
+                    wheelPower = powerLevel;
+
+                    // Light up the spin button by changing it's source image and adding a clickable class to it.
+                    document.getElementById('spin_button').src = "img/kek.png";
+                    document.getElementById('spin_button').className = "clickable";
+                }
+            }
+
+            // -------------------------------------------------------
+            // Click handler for spin button.
+            // -------------------------------------------------------
+            function startSpin()
+            {
+                // Ensure that spinning can't be clicked again while already running.
+                if (wheelSpinning == false) {
+                    // Based on the power level selected adjust the number of spins for the wheel, the more times is has
+                    // to rotate with the duration of the animation the quicker the wheel spins.
+                    if (wheelPower == 1) {
+                        theWheel.animation.spins = 3;
+                    } else if (wheelPower == 2) {
+                        theWheel.animation.spins = 8;
+                    } else if (wheelPower == 3) {
+                        theWheel.animation.spins = 15;
+                    }
+
+                    // Disable the spin button so can't click again while wheel is spinning.
+                    document.getElementById('spin_button').src       = "img/kekoff.png";
+                    document.getElementById('spin_button').className = "";
+
+                    // Begin the spin animation by calling startAnimation on the wheel object.
+                    theWheel.startAnimation();
+
+                    // Set to true so that power can't be changed and spin button re-enabled during
+                    // the current animation. The user will have to reset before spinning again.
+                    wheelSpinning = true;
+                }
+            }
+
+            // -------------------------------------------------------
+            // Function for reset button.
+            // -------------------------------------------------------
+            function resetWheel()
+            {
+                theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+                theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
+                theWheel.draw();                // Call draw to render changes to the wheel.
+
+                document.getElementById('pw1').className = "";  // Remove all colours from the power level indicators.
+                document.getElementById('pw2').className = "";
+                document.getElementById('pw3').className = "";
+
+                wheelSpinning = false;          // Reset to false to power buttons and spin can be clicked again.
+            }
+
+            function randomInteger(min, max) {
+    var rand = min - 0.5 + Math.random() * (max - min + 1)
+    rand = Math.round(rand);
+    return rand;
+  }
+            function alertPrize(indicatedSegment)
+            {
+                // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
+                alert('Вы выйграли злак ' + indicatedSegment.text + ' в количестве '+ randomInteger(1,5) + ' ' + 'кг');
+            }
+        </script>
+
+        <div id="down">
+            <h2>Free СПИНЫ КАЖДЫЙ ДЕНЬ!</h2>
+        </div>
+    </body>
+</html>
